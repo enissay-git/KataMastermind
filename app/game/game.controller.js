@@ -5,11 +5,12 @@ angular.module('mastermind.game', ['ngRoute'])
 .config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/game', {
     templateUrl: 'game/game.html',
-    controller: 'gameCtrl'
+    controller: 'gameCtrl',
+    controllerAs: 'gameCtrl'
   });
 }])
 
-.controller('gameCtrl', function($scope) {
+.controller('gameCtrl', ['$scope', function($scope) {
 
   var vm = this;
   $scope.secret = [];
@@ -28,4 +29,4 @@ angular.module('mastermind.game', ['ngRoute'])
     return {wellPlaced: 1, missPlaced: 1};
   }
 
-});
+}]);
