@@ -11,4 +11,10 @@ angular.module('mastermind.game', ['ngRoute'])
 
 .controller('gameCtrl', [function() {
 
+  var vm = this;
+
+  vm.checkAnswer = (guess) => {
+    return {wellPlaced: 1, missPlaced: 1};
+  }
+
 }]);
