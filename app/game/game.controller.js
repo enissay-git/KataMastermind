@@ -10,11 +10,11 @@ angular.module('mastermind.game', ['ngRoute'])
   });
 }])
 
-.controller('gameCtrl', ['$scope', function($scope) {
+.controller('gameCtrl', ['$scope', '$log', function($scope, $log) {
 
   var vm = this;
-  $scope.secret = [];
-  $scope.guess = [];
+  vm.secret = [];
+  vm.guess = [];
   $scope.trials = [];
   vm.colorsChoice = [
     {name: 'gray', code: '#808080'},
@@ -26,7 +26,66 @@ angular.module('mastermind.game', ['ngRoute'])
   ];
 
   vm.checkAnswer = (guess) => {
-    return {wellPlaced: 1, missPlaced: 1};
+    const evaluation = {
+      wellPlaced: 0,
+      missPlaced: 0
+    };
+
+    const checkWellPlaced = vm.checkWellPlaced(guess, vm.secret);
+
+    return checkWellPlaced;
+  }
+
+  vm.setSecret = (secret) => {
+    if(secret.length === 4){
+      vm.secret = secret;
+    }
+  }
+
+  vm.setGuess = (guess) => {
+    if(guess.length === 4) {
+      vm.guess = guess;
+    }
+  }
+
+  vm.checkWellPlaced = (guess, secret) => {
+
+    const wellPlacedResult = {
+      wellPlaced: 0,
+      guessForMissPlaced: [],
+      secretForMissPlaced: []
+    };
+
+    secret.forEach((color, index) => {
+      $log.log(`Color secret : ${color} Color guess : ${guess[index]}, Index : ${index}`);
+      if(guess[index] === color){
+        wellPlacedResult.wellPlaced++;
+      }
+      else{
+        wellPlacedResult.guessForMissPlaced.push(guess[index]);
+        wellPlacedResult.secretForMissPlaced.push(secret[index]);
+      }
+    });
+
+    return vm.checkMissPlaced(wellPlacedResult);
+  }
+
+  vm.checkMissPlaced = (wellPlacedResult) => {
+    //use indexof
+    const missPlacedResult = {
+      missPlaced: 0,
+      wellPlaced: wellPlacedResult.wellPlaced
+    }
+    const guessForMissPlacedTmp = wellPlacedResult.guessForMissPlaced;
+
+    wellPlacedResult.secretForMissPlaced.forEach((color, index) => {
+      if(guessForMissPlacedTmp.indexOf(color) > -1){
+        missPlacedResult.missPlaced++;
+      }
+      guessForMissPlacedTmp.splice(guessForMissPlacedTmp.indexOf(color), 1);
+    });
+
+    return missPlacedResult;
   }
 
 }]);
