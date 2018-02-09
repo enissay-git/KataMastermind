@@ -10,12 +10,12 @@ angular.module('mastermind.game', ['ngRoute'])
   });
 }])
 
-.controller('gameCtrl', ['$scope', '$log', function($scope, $log) {
+.controller('gameCtrl', ['$log', function($log) {
 
   var vm = this;
   vm.secret = [];
   vm.guess = [];
-  $scope.trials = [];
+  vm.trials = [];
   vm.colorsChoice = [
     {name: 'gray', code: '#808080'},
     {name: 'red', code: '#FF0000'},
@@ -25,15 +25,10 @@ angular.module('mastermind.game', ['ngRoute'])
     {name: 'purple', code: '#800080'},
   ];
 
-  vm.checkAnswer = (guess) => {
-    const evaluation = {
-      wellPlaced: 0,
-      missPlaced: 0
-    };
+  vm.checkAnswer = () => {
+    const evaluation = vm.checkWellPlaced(vm.guess, vm.secret);
 
-    const checkWellPlaced = vm.checkWellPlaced(guess, vm.secret);
-
-    return checkWellPlaced;
+    return evaluation;
   }
 
   vm.setSecret = (secret) => {
@@ -71,7 +66,6 @@ angular.module('mastermind.game', ['ngRoute'])
   }
 
   vm.checkMissPlaced = (wellPlacedResult) => {
-    //use indexof
     const missPlacedResult = {
       missPlaced: 0,
       wellPlaced: wellPlacedResult.wellPlaced
