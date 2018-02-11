@@ -1,2 +1,62 @@
-<p>Try to crack the code :</p>
-{{gameCtrl.toto}}
+<div class="guessContainer">
+
+    <p>The code :</p>
+
+    <div class="colorsContainer">
+        <div class="colorSecret">
+            <div class="secretDisplay" ng-style="gameCtrl.getStyle(gameCtrl.secret[0])">
+            </div>
+        </div>
+
+        <div class="colorSelector">
+            <div class="secretDisplay" ng-style="gameCtrl.getStyle(gameCtrl.secret[1])">
+            </div>
+        </div>
+        
+        <div class="colorSelector">
+            <div class="secretDisplay" ng-style="gameCtrl.getStyle(gameCtrl.secret[2])"></div>
+        </div>
+
+        <div class="colorSelector">
+            <div class="secretDisplay" ng-style="gameCtrl.getStyle(gameCtrl.secret[3])"></div>
+        </div>
+    </div>
+
+    <input type="checkbox" name="cheat" ng-model="gameCtrl.cheat"> Show response
+
+
+    <p>Try to crack the code :</p>
+
+    <div class="colorsContainer">
+        <div class="colorSelector">
+            <div class="guessDisplay" style="background-color: {{guess_0.code}};">
+            </div>
+            <select class="guessSelector" ng-model="guess_0" ng-options="x.name for x in gameCtrl.colorsChoice">
+            </select>
+        </div>
+
+        <div class="colorSelector">
+            <div class="guessDisplay" style="background-color: {{guess_1.code}};">
+            </div>
+            <select class="guessSelector" ng-model="guess_1" ng-options="x.name for x in gameCtrl.colorsChoice">
+            </select>
+        </div>
+        
+        <div class="colorSelector">
+            <div class="guessDisplay" style="background-color: {{guess_2.code}};"></div>
+            <select class="guessSelector" ng-model="guess_2" ng-options="x.name for x in gameCtrl.colorsChoice">
+            </select>
+        </div>
+
+        <div class="colorSelector">
+            <div class="guessDisplay" style="background-color: {{guess_3.code}};"></div>
+            <select class="guessSelector" ng-model="guess_3" ng-options="x.name for x in gameCtrl.colorsChoice">
+            </select>
+        </div>
+    </div>
+    <div class="bottomContainer">
+        <button ng-click="gameCtrl.setGuess([guess_0.name, guess_1.name, guess_2.name, guess_3.name])">Guess</button>
+        <p>Current score : miss placed {{gameCtrl.currentEvaluation.missPlaced}} / well placed {{gameCtrl.currentEvaluation.wellPlaced}} </p>
+    </div>
+</div>
+

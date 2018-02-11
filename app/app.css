@@ -1,1 +1,52 @@
 /* app css stylesheet */
+body{
+    background-color: #efefef 
+}
+
+.container-app {
+    width: 80%;
+    margin: auto;
+    text-align: center;
+}
+
+.about {
+    width: 100%;
+    text-align: center;
+    font-style: italic;
+    background-color: black;
+    color: white; 
+    bottom: 0;
+    position: absolute;
+    padding: 4px;
+    font-size: 12px;
+}
+
+.guessDisplay, .secretDisplay {
+    width: 50px;
+    height: 50px;
+    border: solid black 2px;
+    border-radius: 16px;
+    margin: auto; 
+}
+
+.colorSelector, .colorSecret {
+    display: inline-block;
+    margin: 8px;
+}
+
+.guessSelector {
+    margin: auto;
+    margin-top: 4px; 
+}
+
+.guessContainer, .colorsContainer, .bottomContainer {
+    text-align: center;
+    display: inline-block;
+    width: 100%;
+}
+
+@media screen and (max-width: 600px){
+    .container-app {
+        width: 100%;
+    }
+}
