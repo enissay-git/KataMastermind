@@ -51,8 +51,8 @@ angular.module('mastermind.game', ['ngRoute'])
     const secret = [];
 
     for (let index = 0; index < vm.secretSize; index++) {
-      const indexColor = Math.floor(Math.random() * vm.colorsChoice.length);  
-      secret.push(vm.colorsChoice[indexColor].name);      
+      const indexColor = Math.floor(Math.random() * vm.colorsChoice.length);
+      secret.push(vm.colorsChoice[indexColor].name);
     }
 
     vm.setSecret(secret);
@@ -61,8 +61,8 @@ angular.module('mastermind.game', ['ngRoute'])
   vm.setGuess = (guess) => {
     if(guess.length === vm.secretSize) {
       vm.guess = guess;
+      vm.checkAnswer();
     }
-    vm.checkAnswer();
   }
 
   vm.getColorByName = (colorName) => {
