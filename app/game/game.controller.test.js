@@ -25,7 +25,7 @@ describe('mastermind.game module', function() {
       mastermindCtrl.setSecret(['blue', 'blue', 'blue', 'blue']);
       mastermindCtrl.setGuess(['red', 'yellow', 'grey', 'grey']);
 
-      var evaluation = mastermindCtrl.checkAnswer();
+      var evaluation = mastermindCtrl.evaluateGuess();
 
       expect(evaluation).toEqual({wellPlaced: 0, misplaced: 0});
     }));
@@ -35,7 +35,7 @@ describe('mastermind.game module', function() {
       mastermindCtrl.setSecret(['blue', 'blue', 'blue', 'blue']);
       mastermindCtrl.setGuess(['blue', 'grey', 'grey', 'grey']);
 
-      expect(mastermindCtrl.checkAnswer()).toEqual(response);
+      expect(mastermindCtrl.evaluateGuess()).toEqual(response);
     }));
 
     it('should indicate one color is misplaced when the user guessed one color but at the wrong location', inject(function($controller) {
@@ -43,7 +43,7 @@ describe('mastermind.game module', function() {
       mastermindCtrl.setSecret(['red', 'yellow', 'grey', 'grey']);
       mastermindCtrl.setGuess(['blue', 'red', 'green', 'green']);
 
-      expect(mastermindCtrl.checkAnswer()).toEqual(response);
+      expect(mastermindCtrl.evaluateGuess()).toEqual(response);
     }));
 
     it('should indicate that one color is well placed and one is misplaced when user guess one good color at right place and one at the wrong', inject(function($controller) {
@@ -51,7 +51,7 @@ describe('mastermind.game module', function() {
       mastermindCtrl.setSecret(['blue', 'red', 'green', 'purple']);
       mastermindCtrl.setGuess(['yellow', 'red', 'blue', 'grey']);
 
-      expect(mastermindCtrl.checkAnswer()).toEqual(response);
+      expect(mastermindCtrl.evaluateGuess()).toEqual(response);
     }));
 
   });

@@ -35,7 +35,7 @@ angular.module('mastermind.game', ['ngRoute'])
     vm.generateSecret();
   }
 
-  vm.checkAnswer = () => {
+  vm.evaluateGuess = () => {
     const misplacedToTestValue = vm.deleteWellPlaced(vm.guess, vm.secret);
     const evaluation = {
       wellPlaced: vm.countWellPlaced(vm.guess, vm.secret),
@@ -66,7 +66,7 @@ angular.module('mastermind.game', ['ngRoute'])
   vm.setGuess = (guess) => {
     if(guess.length === vm.secretSize) {
       vm.guess = guess;
-      vm.checkAnswer();
+      vm.evaluateGuess();
     }
   }
 
