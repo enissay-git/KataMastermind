@@ -27,7 +27,7 @@ angular.module('mastermind.game', ['ngRoute'])
     {name: 'purple', code: '#800080'},
   ];
   vm.currentEvaluation = {
-    missPlaced: 0,
+    misplaced: 0,
     wellPlaced: 0
   };
 
@@ -36,7 +36,12 @@ angular.module('mastermind.game', ['ngRoute'])
   }
 
   vm.checkAnswer = () => {
-    const evaluation = vm.checkWellPlaced(vm.guess, vm.secret);
+    const misplacedToTestValue = vm.deleteWellPlaced(vm.guess, vm.secret);
+    const evaluation = {
+      wellPlaced: vm.countWellPlaced(vm.guess, vm.secret),
+      misplaced: vm.countMisplaced(misplacedToTestValue)
+    }
+
     vm.currentEvaluation = evaluation;
     return evaluation;
   }
@@ -83,42 +88,47 @@ angular.module('mastermind.game', ['ngRoute'])
     return {"background-color": color};
   }
 
-  vm.checkWellPlaced = (guess, secret) => {
+  vm.countWellPlaced = (guess, secret) => {
 
-    const wellPlacedResult = {
-      wellPlaced: 0,
-      guessForMissPlaced: [],
-      secretForMissPlaced: []
-    };
+    let wellPlacedResult = 0;
 
     secret.forEach((color, index) => {
       if(guess[index] === color){
-        wellPlacedResult.wellPlaced++;
-      }
-      else{
-        wellPlacedResult.guessForMissPlaced.push(guess[index]);
-        wellPlacedResult.secretForMissPlaced.push(secret[index]);
+        wellPlacedResult++;
       }
     });
 
-    return vm.checkMissPlaced(wellPlacedResult);
+    return wellPlacedResult;
   }
 
-  vm.checkMissPlaced = (wellPlacedResult) => {
-    const missPlacedResult = {
-      missPlaced: 0,
-      wellPlaced: wellPlacedResult.wellPlaced
+  vm.deleteWellPlaced = (guess, secret) => {
+    const misplacedToTestValue = {
+      guessForMisplaced: [],
+      secretForMisplaced: []
     }
-    const guessForMissPlacedTmp = wellPlacedResult.guessForMissPlaced;
 
-    wellPlacedResult.secretForMissPlaced.forEach((color, index) => {
-      if(guessForMissPlacedTmp.indexOf(color) > -1){
-        missPlacedResult.missPlaced++;
+    secret.forEach((color, index) => {
+      if(guess[index] !== color){
+        misplacedToTestValue.guessForMisplaced.push(guess[index]);
+        misplacedToTestValue.secretForMisplaced.push(secret[index]);
       }
-      guessForMissPlacedTmp.splice(guessForMissPlacedTmp.indexOf(color), 1);
     });
 
-    return missPlacedResult;
+    return misplacedToTestValue;
+  }
+
+  vm.countMisplaced = (misplacedToTestValue) => {
+    let misplacedResult = 0;
+    const guessForMisplacedTmp = misplacedToTestValue.guessForMisplaced;
+
+    misplacedToTestValue.secretForMisplaced.forEach((color, index) => {
+      if(guessForMisplacedTmp.indexOf(color) > -1){
+        misplacedResult++;
+      }
+      guessForMisplacedTmp.splice(guessForMisplacedTmp.indexOf(color), 1);
+    });
+
+    return misplacedResult;
   }
 
   init();
