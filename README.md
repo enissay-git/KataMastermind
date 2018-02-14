@@ -14,7 +14,7 @@ The rules are the following :
     - If a user guess only one color even by propose it multiple time then the result indicate that one color is well placed and do not indicate misplaced color
     - If a user guess one well placed color and one misplaced then the result indicate one color is well placed and one is misplaced
     - If the user guess all the colors but misplaced then the result indicate that all the colors are misplaced
-    - If the user guess all the colors but well placed then the result indicate that all the colors are well placed
+    - If the user guess all the colors well placed then the result indicate that all the colors are well placed
 
 To run the project use : npm start
 
