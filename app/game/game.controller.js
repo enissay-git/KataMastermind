@@ -36,10 +36,9 @@ angular.module('mastermind.game', ['ngRoute'])
   }
 
   vm.evaluateGuess = () => {
-    const misplacedToTestValue = vm.deleteWellPlaced(vm.guess, vm.secret);
     const evaluation = {
-      wellPlaced: vm.countWellPlaced(vm.guess, vm.secret),
-      misplaced: vm.countMisplaced(misplacedToTestValue)
+      wellPlaced: vm.countWellPlaced(),
+      misplaced: vm.countMisplaced()
     }
 
     vm.currentEvaluation = evaluation;
@@ -88,12 +87,12 @@ angular.module('mastermind.game', ['ngRoute'])
     return {"background-color": color};
   }
 
-  vm.countWellPlaced = (guess, secret) => {
+  vm.countWellPlaced = () => {
 
     let wellPlacedResult = 0;
 
-    secret.forEach((color, index) => {
-      if(guess[index] === color){
+    vm.secret.forEach((color, index) => {
+      if(vm.guess[index] === color){
         wellPlacedResult++;
       }
     });
@@ -101,23 +100,24 @@ angular.module('mastermind.game', ['ngRoute'])
     return wellPlacedResult;
   }
 
-  vm.deleteWellPlaced = (guess, secret) => {
+  vm.deleteWellPlaced = () => {
     const misplacedToTestValue = {
       guessForMisplaced: [],
       secretForMisplaced: []
     }
 
-    secret.forEach((color, index) => {
-      if(guess[index] !== color){
-        misplacedToTestValue.guessForMisplaced.push(guess[index]);
-        misplacedToTestValue.secretForMisplaced.push(secret[index]);
+    vm.secret.forEach((color, index) => {
+      if(vm.guess[index] !== color){
+        misplacedToTestValue.guessForMisplaced.push(vm.guess[index]);
+        misplacedToTestValue.secretForMisplaced.push(vm.secret[index]);
       }
     });
 
     return misplacedToTestValue;
   }
 
-  vm.countMisplaced = (misplacedToTestValue) => {
+  vm.countMisplaced = () => {
+    const misplacedToTestValue = vm.deleteWellPlaced();
     let misplacedResult = 0;
     const guessForMisplacedTmp = misplacedToTestValue.guessForMisplaced;
 

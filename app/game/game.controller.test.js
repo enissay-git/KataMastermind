@@ -21,6 +21,42 @@ describe('mastermind.game module', function() {
       expect(mastermindCtrl).toBeDefined();
     }));
 
+    it('should indicate that one color is well placed when user guess one', inject(function($controller) {
+      mastermindCtrl.setSecret(['blue', 'blue', 'blue', 'blue']);
+      mastermindCtrl.setGuess(['blue', 'yellow', 'grey', 'grey']);
+
+      var evaluation = mastermindCtrl.countWellPlaced();
+
+      expect(evaluation).toEqual(1);
+    }));
+
+    it('should indicate that two color are well placed when user guess two', inject(function($controller) {
+      mastermindCtrl.setSecret(['blue', 'yellow', 'blue', 'blue']);
+      mastermindCtrl.setGuess(['blue', 'yellow', 'grey', 'grey']);
+
+      var evaluation = mastermindCtrl.countWellPlaced();
+
+      expect(evaluation).toEqual(2);
+    }));
+
+    it('should indicate that one color is misplaced when user guess one in wrong position', inject(function($controller) {
+      mastermindCtrl.setSecret(['yellow', 'blue', 'blue', 'blue']);
+      mastermindCtrl.setGuess(['grey', 'yellow', 'grey', 'grey']);
+
+      var evaluation = mastermindCtrl.countMisplaced();
+
+      expect(evaluation).toEqual(1);
+    }));
+
+    it('should indicate that two color are misplaced when user guess two in wrong position', inject(function($controller) {
+      mastermindCtrl.setSecret(['yellow', 'blue', 'blue', 'blue']);
+      mastermindCtrl.setGuess(['blue', 'yellow', 'grey', 'grey']);
+
+      var evaluation = mastermindCtrl.countMisplaced();
+
+      expect(evaluation).toEqual(2);
+    }));
+
     it('should indicate that no color is well placed nor misplaced when user guessed totally wrong', inject(function($controller) {
       mastermindCtrl.setSecret(['blue', 'blue', 'blue', 'blue']);
       mastermindCtrl.setGuess(['red', 'yellow', 'grey', 'grey']);
