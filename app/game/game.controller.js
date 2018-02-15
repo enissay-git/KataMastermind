@@ -76,6 +76,7 @@ angular.module('mastermind.game', ['ngRoute'])
       vm.colorsChoice.forEach((color, index) => {
         if(color.name === colorName){
           codeColor = color.code;
+          return codeColor;
         }
       });
     }
